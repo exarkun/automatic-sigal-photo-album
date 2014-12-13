@@ -4,7 +4,7 @@ MAINTAINER Jean-Paul Calderone <exarkun@twistedmatrix.com>
 RUN apt-get update -qq
 RUN apt-get install -y python-pip python-virtualenv s3cmd
 RUN virtualenv /opt/sigal
-RUN /opt/sigal/bin/pip install pexif characteristic python-twisted sigal
+RUN /opt/sigal/bin/pip install pexif characteristic twisted sigal
 
 RUN mkdir /opt/lyra-sigal
 ADD index.html /opt/lyra-sigal/index.html

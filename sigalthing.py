@@ -29,7 +29,7 @@ class SigalIntegration(object):
         jpeg = JpegFile.fromFile(image_path.path)
         exif = jpeg.exif.get_primary()
         # 2014:04:23 16:07:06\x00
-        timestamp = datetime.strptime(exif[306], "%Y:%M:%D %H:%M:%S")
+        timestamp = datetime.strptime(exif[306], "%Y:%m:%d %H:%M:%S")
         age = timestamp - self.epoch
         weeks = age.total_seconds() / (60 * 60 * 24 * 7)
         # Zero-fill the week into two columns

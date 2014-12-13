@@ -14,7 +14,7 @@ class SigalIntegration(object):
 
     def add_image(self, image, share):
         all_photos = self.gallery.child(b"photos-all")
-        image_path = all_photos.child(image.name)
+        image_path = all_photos.child(image.filename)
         if image_path.exists():
             raise ValueError("Photo already exists.")
 

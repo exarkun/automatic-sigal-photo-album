@@ -13,6 +13,8 @@ ADD uploads.py /opt/lyra-sigal/uploads.py
 ADD sigalthing.py /opt/lyra-sigal/sigalthing.py
 ADD lyra-sigal.rpy /opt/lyra-sigal/lyra-sigal.rpy
 
+RUN mkdir -p /photos/{albums,photos-all}
+
 EXPOSE 8080
 VOLUME /photos
 

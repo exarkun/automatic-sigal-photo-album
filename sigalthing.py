@@ -81,5 +81,5 @@ class SigalIntegration(object):
     def upload(self, directory):
         check_call([
                 "s3cmd", "--config", self.gallery.child(b"s3cfg").path,
-                "sync", directory.path, self.bucket,
-        ])
+                "sync", ".", self.bucket,
+        ], cwd=directory.path)

@@ -40,14 +40,15 @@ class SigalIntegration(object):
         # information in the filename.
         match = date_expression.search(image_path.basename())
         if match is not None:
+            data = match.group(0)
             year = "%Y"
-            if len(match) == 6:
+            if len(data) == 6:
                 year = "%y"
-            if 2014 <= int(match[:4]) <= 2100:
+            if 2014 <= int(data[:4]) <= 2100:
                 # 2101 could be January 21st I guess
-                return datetime.strptime(match.group(0), year + "%m%d")
-            elif 2014 <= int(match[-4:]) <= 2100:
-                return datetime.strptime(match.group(0), "%m%d" + year)
+                return datetime.strptime(data, year + "%m%d")
+            elif 2014 <= int(data[-4:]) <= 2100:
+                return datetime.strptime(data, "%m%d" + year)
 
         return None
 

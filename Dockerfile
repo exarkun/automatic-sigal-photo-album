@@ -16,5 +16,7 @@ ADD lyra-sigal.rpy /opt/lyra-sigal/lyra-sigal.rpy
 EXPOSE 8080
 VOLUME /photos
 
+ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/sigal/bin
+
 WORKDIR /opt/lyra-sigal
 CMD /opt/sigal/bin/twistd -n web --resource lyra-sigal.rpy

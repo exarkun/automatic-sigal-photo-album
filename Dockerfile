@@ -11,6 +11,7 @@ RUN mkdir /opt/lyra-sigal
 ADD index.html /opt/lyra-sigal/index.html
 ADD uploads.py /opt/lyra-sigal/uploads.py
 ADD sigalthing.py /opt/lyra-sigal/sigalthing.py
+ADD lyra-sigal.rpy /opt/lyra-sigal/lyra-sigal.rpy
 
 EXPOSE 8080
 VOLUME /photos

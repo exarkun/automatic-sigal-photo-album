@@ -10,7 +10,8 @@ from sigalthing import SigalIntegration
 
 sigalint = SigalIntegration(
     epoch=datetime.strptime(environ[b"EPOCH"], "%Y-%m-%d"),
-    gallery=FilePath(environ[b"SIGAL_GALLERY_PATH"])
+    gallery=FilePath(environ[b"SIGAL_GALLERY_PATH"]),
+    bucket=environ[b"UPLOAD_BUCKET"],
 )
 
 resource = Resource()

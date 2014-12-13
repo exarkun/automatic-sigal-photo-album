@@ -6,7 +6,7 @@ from subprocess import check_call
 from characteristic import attributes
 from pexif import JpegFile
 
-@attributes(["epoch", "gallery"])
+@attributes(["epoch", "gallery", "bucket"])
 class SigalIntegration(object):
     def __init__(self):
         if not self.gallery.isdir():

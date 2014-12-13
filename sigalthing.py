@@ -35,6 +35,8 @@ class SigalIntegration(object):
         # Zero-fill the week into two columns
         albums = self.gallery.child(b"albums")
         album = albums.child(u"week-{:02}".format(int(weeks)))
+        if not album.isdir():
+            album.makedirs()
         image_path.linkTo(album.child(image_path.basename()))
 
 

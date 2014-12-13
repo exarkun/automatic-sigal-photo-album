@@ -20,8 +20,7 @@ class Upload(Resource):
                 }
             )
         image = form[b"image"]
-        share = form[b"share"]
-        print share
+        share = form[b"share"].value == 'on'
         self.process_upload(image, share)
 
         return redirectTo(form[b"return-url"].value, request)

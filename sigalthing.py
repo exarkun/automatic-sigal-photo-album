@@ -21,7 +21,7 @@ class SigalIntegration(object):
         image_path.setContent(image.value)
 
         if share:
-            self.add_to_album()
+            self.add_to_album(image_path)
             build = self.generate_sigal()
             self.upload(build)
 

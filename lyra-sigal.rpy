@@ -9,7 +9,7 @@ from uploads import Upload
 from sigalthing import SigalIntegration
 
 sigalint = SigalIntegration(
-    epoch=datetime.strptime(environ[b"EPOCH"], "%Y-%M-%D"),
+    epoch=datetime.strptime(environ[b"EPOCH"], "%Y-%m-%d"),
     gallery=FilePath(environ[b"SIGAL_GALLERY_PATH"])
 )
 

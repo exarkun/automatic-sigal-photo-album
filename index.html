@@ -6,9 +6,9 @@
     </title>
   </head>
   <body>
-    <form method="POST" action="upload">
+    <form method="POST" action="upload" enctype="multipart/form-data">
       <input type="hidden" name="return-url" value="/"></input>
-      <input type="file" name="image"></input>
+      <input type="file" name="image" accept="image/*"></input>
       <input type="checkbox" name="share"></input>
       <input type="submit" name="submit"></input>
     </form>

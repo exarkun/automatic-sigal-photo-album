@@ -21,7 +21,7 @@ class Upload(Resource):
                 }
             )
         image = form[b"image"]
-        share = form[b"share"].value == 'on'
+        share = b"share" in form
 
         p = FeedParser()
         p.feed("Content-Disposition: " + form['image'].headers.getheader('content-disposition'))

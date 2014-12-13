@@ -1,7 +1,7 @@
 FROM ubuntu:14.04
 MAINTAINER Jean-Paul Calderone <exarkun@twistedmatrix.com>
 
-RUN apt-get update
+RUN apt-get update -qq
 RUN apt-get install -y python-pip python-virtualenv s3cmd
 RUN virtualenv /opt/sigal
 RUN /opt/sigal/bin/pip install pexif characteristic python-twisted sigal

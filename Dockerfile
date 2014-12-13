@@ -4,6 +4,8 @@ MAINTAINER Jean-Paul Calderone <exarkun@twistedmatrix.com>
 RUN apt-get update -qq
 RUN apt-get install -y python-pip python-virtualenv s3cmd
 RUN apt-get build-dep -y python-twisted
+RUN apt-get build-dep -y python-imaging
+RUN apt-get install -y libopenjpeg-dev
 RUN virtualenv /opt/sigal
 RUN /opt/sigal/bin/pip install pexif characteristic twisted sigal==0.7.0
 

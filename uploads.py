@@ -1,4 +1,5 @@
 from cgi import FieldStorage
+from email.parser import FeedParser
 
 from twisted.web.resource import Resource
 from twisted.web.util import redirectTo
@@ -21,6 +22,12 @@ class Upload(Resource):
             )
         image = form[b"image"]
         share = form[b"share"].value == 'on'
-        self.process_upload(image, share)
+
+        p = FeedParser()
+        p.feed("Content-Disposition: " + form['image'].headers.getheader('content-disposition'))
+        m = p.close()
+        filename = m.get_filename()
+
+        self.process_upload(filename, image.value, share)
 
         return redirectTo(form[b"return-url"].value, request)

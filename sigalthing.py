@@ -2,9 +2,12 @@ from __future__ import division
 
 from datetime import datetime
 from subprocess import check_call
+from re import compile
 
 from characteristic import attributes
 from pexif import JpegFile
+
+date_expression = compile("(\d{6,8})")
 
 @attributes(["epoch", "gallery", "bucket"])
 class SigalIntegration(object):
@@ -25,11 +28,35 @@ class SigalIntegration(object):
             build = self.generate_sigal()
             self.upload(build)
 
-    def add_to_album(self, image_path):
+
+    def get_timestamp(self, image_path):
         jpeg = JpegFile.fromFile(image_path.path)
         exif = jpeg.exif.get_primary()
         # 2014:04:23 16:07:06\x00
-        timestamp = datetime.strptime(exif[306], "%Y:%m:%d %H:%M:%S")
+        if exif[306]:
+            return datetime.strptime(exif[306], "%Y:%m:%d %H:%M:%S")
+
+        # Sigh.  From some stupid camera.  Hopefully there's some
+        # information in the filename.
+        match = date_expression.search(image_path.basename())
+        if match is not None:
+            year = "%Y"
+            if len(match) == 6:
+                year = "%y"
+            if 2014 <= int(match[:4]) <= 2100:
+                # 2101 could be January 21st I guess
+                return datetime.strptime(match.group(0), year + "%m%d")
+            elif 2014 <= int(match[-4:]) <= 2100:
+                return datetime.strptime(match.group(0), "%m%d" + year)
+
+        return None
+
+
+    def add_to_album(self, image_path):
+        timestamp = self.get_timestamp(image_path)
+        if timestamp is None:
+            raise ValueError("Cannot determine timestamp of image.")
+
         age = timestamp - self.epoch
         weeks = age.total_seconds() / (60 * 60 * 24 * 7)
         # Zero-fill the week into two columns

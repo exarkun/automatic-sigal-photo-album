@@ -5,7 +5,7 @@ RUN apt-get update -qq
 RUN apt-get install -y python-pip python-virtualenv s3cmd
 RUN apt-get build-dep -y python-twisted
 RUN virtualenv /opt/sigal
-RUN /opt/sigal/bin/pip install pexif characteristic twisted sigal
+RUN /opt/sigal/bin/pip install pexif characteristic twisted sigal==0.7.0
 
 RUN mkdir /opt/lyra-sigal
 ADD index.html /opt/lyra-sigal/index.html

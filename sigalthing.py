@@ -42,12 +42,16 @@ class SigalIntegration(object):
         if match is not None:
             data = match.group(0)
             year = "%Y"
+            size = 4
+            offset = 0
             if len(data) == 6:
                 year = "%y"
-            if 2014 <= int(data[:4]) <= 2100:
+                size = 2
+                offset = 2000
+            if 2014 <= int(data[:size]) + offset <= 2100:
                 # 2101 could be January 21st I guess
                 return datetime.strptime(data, year + "%m%d")
-            elif 2014 <= int(data[-4:]) <= 2100:
+            elif 2014 <= int(data[-size:]) + offset <= 2100:
                 return datetime.strptime(data, "%m%d" + year)
 
         return None

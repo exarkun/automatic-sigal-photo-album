@@ -15,7 +15,8 @@ class SigalIntegration(object):
         if not self.gallery.isdir():
             raise ValueError("Sigal gallery path does not exist.")
 
-    def add_image(self, filename, image, share):
+
+    def add_image(self, filename, image, share, upload):
         all_photos = self.gallery.child(b"photos-all")
         image_path = all_photos.child(filename)
         if image_path.exists():
@@ -25,6 +26,8 @@ class SigalIntegration(object):
 
         if share:
             self.add_to_album(image_path)
+
+        if upload:
             build = self.generate_sigal()
             self.upload(build)
 

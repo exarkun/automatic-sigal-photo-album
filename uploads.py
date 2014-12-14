@@ -22,12 +22,13 @@ class Upload(Resource):
             )
         image = form[b"image"]
         share = b"share" in form
+        upload = b"share" in form
 
         p = FeedParser()
         p.feed("Content-Disposition: " + form['image'].headers.getheader('content-disposition'))
         m = p.close()
         filename = m.get_filename()
 
-        self.process_upload(filename, image.value, share)
+        self.process_upload(filename, image.value, share, upload)
 
         return redirectTo(form[b"return-url"].value, request)

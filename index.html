@@ -10,10 +10,10 @@
       <input type="hidden" name="return-url" value="/"></input>
       <input type="file" name="image" accept="image/*"></input>
       <input type="checkbox" name="share">Share</input>
-      <input type="submit" name="submit"></input>
+      <input type="Upload" name="upload"></input>
     </form>
-    <form method="POST" action="upload" enctype="multipart/form-data">
-      <input type="hidden" name="upload" value="on"></input>
-      <input type="submit" name="Upload" value="Upload"></input>
+    <form method="POST" action="sync" enctype="multipart/form-data">
+      <input type="hidden" name="return-url" value="/"></input>
+      <input type="submit" name="sync"></input>
   </body>
 </html>

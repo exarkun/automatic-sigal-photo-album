@@ -4,9 +4,21 @@ from email.parser import FeedParser
 from twisted.web.resource import Resource
 from twisted.web.util import redirectTo
 
+class Sync(Resource):
+    def __init__(self, sync):
+        self.sync = sync
+
+
+    def render_POST(self, request):
+        self.sync()
+        form = request.args
+        return redirectTo(form[b"return-url"][0], request)
+
+
+
 class Upload(Resource):
-    def __init__(self, process_upload):
-        self.process_upload = process_upload
+    def __init__(self, process_image):
+        self.process_image = process_image
 
 
     def render_POST(self, request):
@@ -22,17 +34,15 @@ class Upload(Resource):
             )
         image = form[b"image"]
         share = b"share" in form
-        upload = b"upload" in form
 
-        if upload:
-            filename = value = None
-        else:
-            p = FeedParser()
-            p.feed("Content-Disposition: " + form['image'].headers.getheader('content-disposition'))
-            m = p.close()
-            filename = m.get_filename()
-            value = image.value
+        p = FeedParser()
+        p.feed(
+            "Content-Disposition: " +
+            form['image'].headers.getheader('content-disposition'))
+        m = p.close()
+        filename = m.get_filename()
+        value = image.value
 
-        self.process_upload(filename, value, share, upload)
+        self.process_image(filename, value, share)
 
         return redirectTo(form[b"return-url"].value, request)

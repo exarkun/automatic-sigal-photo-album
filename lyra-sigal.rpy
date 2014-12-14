@@ -6,6 +6,7 @@ from twisted.web.resource import Resource
 from twisted.web.static import File
 
 from uploads import Upload
+from uploads import Sync
 from sigalthing import SigalIntegration
 
 sigalint = SigalIntegration(
@@ -16,4 +17,5 @@ sigalint = SigalIntegration(
 
 resource = Resource()
 resource.putChild(b"upload", Upload(sigalint.add_image))
+resource.putChild(b"sync", Sync(sigalint.upload_images))
 resource.putChild(b"", File(b"index.html"))

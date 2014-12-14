@@ -16,21 +16,21 @@ class SigalIntegration(object):
             raise ValueError("Sigal gallery path does not exist.")
 
 
-    def add_image(self, filename, image, share, upload):
-        if upload:
-            build = self.generate_sigal()
-            self.upload(build)
-        else:
-            all_photos = self.gallery.child(b"photos-all")
-            image_path = all_photos.child(filename)
-            if image_path.exists():
-                raise ValueError("Photo already exists.")
+    def upload_images(self):
+        build = self.generate_sigal()
+        self.s3_upload(build)
 
-            image_path.setContent(image)
 
-            if share:
-                self.add_to_album(image_path)
+    def add_image(self, filename, image, share):
+        all_photos = self.gallery.child(b"photos-all")
+        image_path = all_photos.child(filename)
+        if image_path.exists():
+            raise ValueError("Photo already exists.")
 
+        image_path.setContent(image)
+
+        if share:
+            self.add_to_album(image_path)
 
 
     def get_timestamp(self, image_path):
@@ -82,7 +82,7 @@ class SigalIntegration(object):
         return working_directory.child(b"_build")
 
 
-    def upload(self, directory):
+    def s3_upload(self, directory):
         check_call([
                 "s3cmd", "--config", self.gallery.child(b"s3cfg").path,
                 "sync", ".", self.bucket,

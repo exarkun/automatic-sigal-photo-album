@@ -22,7 +22,7 @@ class Upload(Resource):
             )
         image = form[b"image"]
         share = b"share" in form
-        upload = b"share" in form
+        upload = b"upload" in form
 
         p = FeedParser()
         p.feed("Content-Disposition: " + form['image'].headers.getheader('content-disposition'))

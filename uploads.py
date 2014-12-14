@@ -24,11 +24,15 @@ class Upload(Resource):
         share = b"share" in form
         upload = b"upload" in form
 
-        p = FeedParser()
-        p.feed("Content-Disposition: " + form['image'].headers.getheader('content-disposition'))
-        m = p.close()
-        filename = m.get_filename()
+        if upload:
+            filename = value = None
+        else:
+            p = FeedParser()
+            p.feed("Content-Disposition: " + form['image'].headers.getheader('content-disposition'))
+            m = p.close()
+            filename = m.get_filename()
+            value = image.value
 
-        self.process_upload(filename, image.value, share, upload)
+        self.process_upload(filename, value, share, upload)
 
         return redirectTo(form[b"return-url"].value, request)

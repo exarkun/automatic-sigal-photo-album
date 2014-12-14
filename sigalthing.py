@@ -17,19 +17,20 @@ class SigalIntegration(object):
 
 
     def add_image(self, filename, image, share, upload):
-        all_photos = self.gallery.child(b"photos-all")
-        image_path = all_photos.child(filename)
-        if image_path.exists():
-            raise ValueError("Photo already exists.")
-
-        image_path.setContent(image)
-
-        if share:
-            self.add_to_album(image_path)
-
         if upload:
             build = self.generate_sigal()
             self.upload(build)
+        else:
+            all_photos = self.gallery.child(b"photos-all")
+            image_path = all_photos.child(filename)
+            if image_path.exists():
+                raise ValueError("Photo already exists.")
+
+            image_path.setContent(image)
+
+            if share:
+                self.add_to_album(image_path)
+
 
 
     def get_timestamp(self, image_path):

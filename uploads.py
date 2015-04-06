@@ -1,6 +1,7 @@
 from cgi import FieldStorage
 from email.parser import FeedParser
 
+from twisted.web.template import XMLFile, Element, renderer, renderElement
 from twisted.web.resource import Resource
 from twisted.web.util import redirectTo
 
@@ -46,3 +47,27 @@ class Upload(Resource):
         self.process_image(filename, value, share)
 
         return redirectTo(form[b"return-url"].value, request)
+
+
+
+class _Index(Resource):
+    def __init__(self, element):
+        Resource.__init__(self)
+        self.element = element
+
+    def render(self, request):
+        return renderElement(request, self.element)
+
+
+class _IndexElement(Element):
+    def __init__(self, loader, online_uri):
+        Element.__init__(self, loader=loader)
+        self.online_uri = online_uri
+
+    @renderer
+    def online_album(self, request, tag):
+        return tag(href=self.online_uri)
+
+
+def index(template_path, online_uri):
+    return _Index(_IndexElement(XMLFile(template_path), online_uri))

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:t="http://twistedmatrix.com/ns/twisted.web.template/0.1">
   <head>
     <title>
       Upload Photos of Lyra
     </title>
   </head>
   <body>
+    <a href="/album">View Offline Album</a>
+    <a t:render="online_album">View Online Album</a>
     <form method="POST" action="upload" enctype="multipart/form-data">
       <input type="hidden" name="return-url" value="/"></input>
       <input type="file" name="image" accept="image/*"></input>
